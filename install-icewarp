@@ -1,0 +1,30 @@
+#!/bin/bash
+
+# IceWarp Download And Deployment Script
+# Created by Bart Simons, 2016
+
+# Dependencies:
+#  - wget
+#  - pv
+
+echo "Downloading IceWarp..."
+wget http://www.icewarp.com/download/server/Ubuntu/Ubuntu16/icewarp11/IceWarpServer-11.4.5_UBUNTU16_x64.tar.gz -q --show-progress -O icewarp.tar.gz
+
+echo "Creating working directory..."
+mkdir icewarp
+
+echo "Extracting IceWarp..."
+pv icewarp.tar.gz | tar -xzf - --strip-components=1 -C icewarp
+
+echo "Changing directory to working directory..."
+cd icewarp
+
+echo "Executing installer..."
+./install.sh
+
+echo "Removing installation files..."
+cd ..
+rm icewarp.tar.gz
+rm -rf icewarp
+
+echo "Done!"
